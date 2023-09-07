@@ -40,5 +40,20 @@ void BT_Test()
 
 int main()
 {
+	BinarySearchTree bst;
+
+	auto pRoot = bst.GetRoot();
+	pRoot->mData = 1;
+	
+	auto pNode = bst.InsertNode(pRoot, 2);
+
+	bst.InsertNode(pNode, 3);
+	bst.InsertNode(pNode, 4);
+	pNode = bst.InsertNode(pNode, 5);
+	bst.InsertNode(pNode, 6);
+	bst.InsertNode(pNode, 7);
+
+	bst.DFS(pRoot);
+	
 	
 }

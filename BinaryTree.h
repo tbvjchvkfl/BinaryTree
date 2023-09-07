@@ -184,7 +184,6 @@ namespace mytree
 
 			return SumT(node->mpLeft) + node->mData + SumT(node->mpRight);
 		}
-
 		bool SearchTarget(Node* node, int value)
 		{
 			if (!node)
@@ -211,7 +210,19 @@ namespace mytree
 		// 트리의 깊이를 구하는 함수를 만들어 볼 것.
 		int TreeDepth(Node* node)
 		{
+			if (node == nullptr)
+			{
+				return 0;
+			}
 			
+			TreeDepth(node->mpLeft);
+
+			int a{};
+			while (node->mpLeft != nullptr)
+			{
+				a++;
+			}
+			return a;
 		}
 
 	};

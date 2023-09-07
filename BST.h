@@ -1,6 +1,6 @@
 #pragma once
 #include <iostream>
-
+#include <stack>
 namespace mysearchtree
 {
 	struct Node
@@ -38,14 +38,37 @@ namespace mysearchtree
 			return mpRoot;
 		}
 
-		Node* InsertLeft(Node* node, int value)
+		Node* InsertNode(Node* node, int value)
 		{
-
+			if (value <= mpRoot->mData)
+			{
+				node->mpLeft = CreateNode(value);
+				return node->mpLeft;
+			}
+			if (value > mpRoot->mData)
+			{
+				node->mpRight = CreateNode(value);
+				return node->mpRight;
+			}
 		}
 
-		Node* InsertRight(Node* node, int value)
+		void Travers(Node* node)
 		{
-			
+			std::cout << node->mData;
+		}
+
+		void DFS(Node* node)
+		{
+			std::stack<Node*> s;
+			if (node == nullptr)
+			{
+				return;
+			}
+
+			Travers(node);
+
+			DFS(node->mpLeft);
+			DFS(node->mpRight);
 		}
 	};
 }
