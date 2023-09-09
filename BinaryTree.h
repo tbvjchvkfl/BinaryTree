@@ -190,11 +190,8 @@ namespace mytree
 			{
 				return false;
 			}
-
-			Visit(node);
-			DFSRecursive(node->mpLeft);
-			DFSRecursive(node->mpRight);
-			if (node->mData == value)
+						
+			if (node->mData == value || SearchTarget(node->mpLeft, value) || SearchTarget(node->mpRight, value))
 			{
 				return true;
 			}
