@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <stack>
+#include <set>
 namespace mysearchtree
 {
 	struct Node
@@ -38,37 +39,73 @@ namespace mysearchtree
 			return mpRoot;
 		}
 
-		Node* InsertNode(Node* node, int value)
+		Node* InsertNode(Node* parent, int value)
 		{
-			if (value <= mpRoot->mData)
+			if (parent == nullptr)
 			{
-				node->mpLeft = CreateNode(value);
-				return node->mpLeft;
+				return CreateNode(value);
 			}
-			if (value > mpRoot->mData)
+
+			if (value < parent->mData)
 			{
-				node->mpRight = CreateNode(value);
-				return node->mpRight;
+				parent->mpLeft = InsertNode(parent->mpLeft, value);
 			}
+			else if (value > parent->mData)
+			{
+				parent->mpRight = InsertNode(parent->mpRight, value);
+			}
+			return parent;
 		}
 
-		void Travers(Node* node)
+	public:
+		void Visit(Node* node)
 		{
-			std::cout << node->mData;
+			std::cout << node->mData << " ";
 		}
-
-		void DFS(Node* node)
+		void InOrder(Node* node)
 		{
-			std::stack<Node*> s;
 			if (node == nullptr)
 			{
 				return;
 			}
-
-			Travers(node);
-
-			DFS(node->mpLeft);
-			DFS(node->mpRight);
+			InOrder(node->mpLeft);
+			Visit(node);
+			InOrder(node->mpRight);
 		}
+		
 	};
+}
+
+void BSTTest()
+{
+	using namespace mysearchtree;
+
+	BinarySearchTree bst;
+
+	auto proot = bst.InsertNode(nullptr, 8);
+	bst.InsertNode(proot, 3);
+	bst.InsertNode(proot, 10);
+	bst.InsertNode(proot, 5);
+	bst.InsertNode(proot, 1);
+	bst.InsertNode(proot, 6);
+
+	bst.InOrder(proot);
+}
+
+void PracticeSet()
+{
+	// 바이너리 서치 트리의 개념 set
+	std::set<int>s;
+
+	s.insert(8);
+	s.insert(3);
+	s.insert(5);
+	s.insert(10);
+	s.insert(6);
+	s.insert(1);
+
+	for (auto e : s)
+	{
+		std::cout << e << std::endl;
+	}
 }
