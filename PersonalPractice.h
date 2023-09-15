@@ -50,6 +50,7 @@ namespace PersonalPractice
 			return parent->mRight;
 		}
 
+	public:
 		void Visit(Node* node)
 		{
 			std::cout << node->mData << ", ";
@@ -67,27 +68,75 @@ namespace PersonalPractice
 			DFS(node->mRight);
 		}
 
+		bool Find(Node* node, int data)
+		{
+			if (!node)
+			{
+				return false;
+			}
+
+			if (node->mData == data || Find(node->mLeft, data) || Find(node->mRight, data))
+			{
+				return true;
+			}
+		}
+
+		void FindFunc_t_void(Node* node, int data)
+		{
+			if (node != nullptr)
+			{
+				return;
+			}
+			if (node->mData == data)
+			{
+				std::cout << "검색 성공!!" << std::endl;
+				return;
+			}
+			else if (Find(node->mLeft, data))
+			{
+
+			}
+		}
 
 	};
 
 	class BST : BT
 	{
-		Node* InsertNode(Node* parent, int value)
+		Node* InsertNode(Node* node, int value)
 		{
-			if (parent == nullptr)
+			if (node == nullptr)
 			{
 				return CreateNode(value);
 			}
 
-			if (value < parent->mData)
+			if (value < node->mData)
 			{
-				parent->mLeft = InsertNode(parent->mLeft, value);
+				node->mLeft = InsertNode(node->mLeft, value);
 			}
-			else if (value > parent->mData)
+			else if (value > node->mData)
 			{
-				parent->mRight = InsertNode(parent->mRight, value);
+				node->mRight = InsertNode(node->mRight, value);
 			}
-			return parent;
+			return node;
+		}
+
+		void InOrderSearch(Node* node)
+		{
+			if (!node)
+			{
+				return;
+			}
+
+			InOrderSearch(node->mLeft);
+			Visit(node);
+			InOrderSearch(node->mRight);
 		}
 	};
+
+
+
+	void Test_Binary()
+	{
+		
+	}
 }
