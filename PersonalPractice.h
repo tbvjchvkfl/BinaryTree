@@ -81,23 +81,30 @@ namespace PersonalPractice
 			}
 		}
 
-		void FindFunc_t_void(Node* node, int data)
+		void FindFunc_t_void(int data)
 		{
-			if (node != nullptr)
+			std::stack<Node*> s;
+			s.push(mpRoot);
+			
+			while (!s.empty())
 			{
-				return;
-			}
-			if (node->mData == data)
-			{
-				std::cout << "검색 성공!!" << std::endl;
-				return;
-			}
-			else if (Find(node->mLeft, data))
-			{
-
+				Node* node = s.top();
+				if (node->mData == data)
+				{
+					std::cout << "찾았습니다." << std::endl;
+					return;
+				}
+				s.pop();
+				if (node->mLeft)
+				{
+					s.push(node->mLeft);
+				}
+				if (node->mRight)
+				{
+					s.push(node->mRight);
+				}
 			}
 		}
-
 	};
 
 	class BST : BT
@@ -120,6 +127,15 @@ namespace PersonalPractice
 			return node;
 		}
 
+		Node* Erase(Node* node, int value)
+		{
+			if (node == nullptr)
+			{
+				return node;
+			}
+
+		}
+
 		void InOrderSearch(Node* node)
 		{
 			if (!node)
@@ -137,6 +153,18 @@ namespace PersonalPractice
 
 	void Test_Binary()
 	{
-		
+		BT bt;
+		auto pRoot = bt.GetRoot();
+		pRoot->mData = 1;
+
+		auto pNode = bt.InsertLeft(pRoot, 2);
+		bt.InsertLeft(pNode, 4);
+		bt.InsertRight(pNode, 5);
+
+		pNode = bt.InsertRight(pRoot, 3);
+		bt.InsertLeft(pNode, 6);
+		bt.InsertRight(pNode, 7);
+
+		bt.FindFunc_t_void(3);
 	}
 }
